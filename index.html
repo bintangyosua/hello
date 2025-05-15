@@ -56,10 +56,57 @@
 
         <!-- CUSTOMIZE: Change the final message text -->
         <div class="final-message">Have a good day Amel!</div>
+
+        <audio
+          id="bg-music"
+          src="LANY - anything 4 u (official lyric video).mp3"
+          loop
+        ></audio>
       </div>
     </div>
 
     <!-- Link to your JavaScript - don't change unless you rename index.js -->
     <script src="index.js"></script>
+
+    <script>
+      const music = document.getElementById("bg-music");
+
+      let playlist = [
+        "Taylor Swift - Enchanted.mp3",
+        "Taylor Swift  august (Official Lyric Video).mp3",
+        "LANY - anything 4 u (official lyric video).mp3",
+        "LANY - ILYSB (Official Lyric Video).mp3",
+      ];
+
+      // Fungsi shuffle (Fisher-Yates)
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Shuffle playlist di awal
+      playlist = shuffleArray(playlist);
+
+      let currentTrack = 0;
+
+      function playTrack(index) {
+        music.src = playlist[index];
+        music.play().catch(() => {
+          console.warn("Autoplay diblokir, pengguna harus klik untuk mulai");
+        });
+      }
+
+      window.addEventListener("load", () => {
+        playTrack(currentTrack);
+      });
+
+      music.addEventListener("ended", () => {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        playTrack(currentTrack);
+      });
+    </script>
   </body>
 </html>
